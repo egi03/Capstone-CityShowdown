@@ -1,0 +1,64 @@
+{% extends "showdown/layout.html" %}
+
+{% load static %}
+{% block body_class %}index-page{% endblock %}
+{% block body %}
+
+ 
+    <div id="game-container">
+        <div id="score">Choose difficulty</div>
+
+        <form action="/play/easy" method="get" class="difficulty-form">
+            <input type="submit" class="difficulty-button" id="easy-button" value="EASY" />
+        </form>
+        <form action="/play/medium" method="get" class="difficulty-form">
+            <input type="submit" class="difficulty-button" id="medium-button" value="MEDIUM" />
+        </form>
+        <form action="/play/hard" method="get" class="difficulty-form">
+            <input type="submit" class="difficulty-button" id="hard-button" value="HARD" />
+        </form>
+    </div>
+    
+
+
+    <style>
+        .difficulty-button {
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .fade-out {
+            animation: fadeOut 1s forwards;
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+            }
+        }
+    </style>
+
+    <script>
+        document.querySelectorAll('.difficulty-form').forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const clickedButton = e.target.querySelector('.difficulty-button');
+                const allButtons = document.querySelectorAll('.difficulty-button');
+
+                allButtons.forEach(button => {
+                    if (button !== clickedButton) {
+                        button.classList.add('fade-out');
+                    }
+                });
+
+                setTimeout(() => {
+                    window.location.href = form.action;
+                }, 1000);
+            });
+        });
+    </script>
+
+{% endblock %}

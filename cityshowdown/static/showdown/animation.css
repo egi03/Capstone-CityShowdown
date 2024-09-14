@@ -1,0 +1,49 @@
+#animation-container {
+    position: fixed;
+    top: 50%;
+    left: 53%;
+    transform: translate(-50%, -50%);
+    vertical-align : middle;
+    z-index: 9999; 
+    justify-content: center;
+    align-items: center;
+    width: 10vw;
+    height: 10vh;
+    pointer-events: none; /* Prevents blocking interactions */
+    display: inline-block;
+    vertical-align: top;
+}
+
+
+#checkmark, #cross {
+    width: 10vh; /* Diameter of the circle */
+    height: 10vh; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    font-size: 6vh; /* Size of the icons */
+    color: #fff;
+    text-align: center;
+    opacity: 1;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    background-color: transparent;
+}
+
+#checkmark {
+    background: linear-gradient(45deg, #7ac142, #a1d765); /* Gradient background for checkmark */
+}
+
+#cross {
+    background: linear-gradient(45deg, #505050, #a86b79); /* Gradient background for cross */
+}
+
+#checkmark.show, #cross.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+#checkmark:not(.show), #cross:not(.show) {
+    opacity: 0;
+    transform: scale(0);
+}

@@ -1,0 +1,58 @@
+{% extends "showdown/layout.html" %}
+
+{% block body_class %}leaderboard-page{% endblock %}
+{% block body %}
+
+    <div class="result-difficulty-buttons">
+        <form action="{% url 'leaderboard' difficulty='easy' %}" method="get" class="difficulty-form">
+            <input type="submit" class="result-difficulty-button {% if difficulty == 'easy' %}active{% endif %}" value="Easy" />
+        </form>
+        <form action="{% url 'leaderboard' difficulty='medium' %}" method="get" class="difficulty-form">
+            <input type="submit" class="result-difficulty-button {% if difficulty == 'medium' %}active{% endif %}" value="Medium" />
+        </form>
+        <form action="{% url 'leaderboard' difficulty='hard' %}" method="get" class="difficulty-form">
+            <input type="submit" class="result-difficulty-button {% if difficulty == 'hard' %}active{% endif %}" value="Hard" />
+        </form>
+    </div>
+
+    <div id="leaderboard-text">Top 10 <br/>all time</div>
+    <div class="leaderboard-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Name</th>
+                    <th>Score</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for game in games %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ game.player.username }}</td>
+                    <td>{{ game.score }}</td>
+                    <td>{{ game.date|date:"Y-m-d H:i" }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4">No results found for this difficulty.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Prevent form submission if the button is already active
+        document.querySelectorAll('.difficulty-form').forEach(form => {
+            form.addEventListener('submit', function(e) {
+                const button = form.querySelector('.result-difficulty-button');
+                if (button.classList.contains('active')) {
+                    e.preventDefault(); // Prevent form submission if the button is already active
+                }
+            });
+        });
+    </script>
+
+{% endblock %}

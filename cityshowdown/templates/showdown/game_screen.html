@@ -1,0 +1,62 @@
+{% extends "showdown/layout.html"%}
+
+{% load static %}
+
+{% block body %}
+
+    <div id="game-container">
+        <div id="score">Score: </div>
+        <h1></h1>
+        <div id="card-container">
+
+            <div class="card-wrapper">
+                <div class="image-container">
+                    <div class="spinner" id="spinner1"></div>
+                    <img class="card-image" id="card-image-1" src="/static/images/default-city.jpg" alt="First City Image">
+                </div>
+                <div class="card-text" id="city1">City1</div>
+                <div class="card-text" id="population-text"></div>
+            </div>
+            
+            <div class="card-wrapper">
+                <div class="image-container">
+                    <div class="spinner" id="spinner2"></div>
+                    <img class="card-image" id="card-image-2" src="/static/images/default-city.jpg" alt="Second City Image">
+                </div>
+                <div class="card-text" id="city2">City2</div>
+                <div class="card-text" id="guessed-population-text" style="visibility:hidden;">AA</div>
+                <div id="guess-buttons">
+                    <button id="higher-button"><p id="higher-text">MORE</p></button>
+                    <button id="lower-button"><p id="lower-text">LESS</p></button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <form id="resultForm" method="post" action="/result/">
+        {% csrf_token %}
+        <input type="hidden" id="winnerInput" name="winner" value="">
+        <input type="hidden" id="resultInput" name="result" value="">
+        <input type="hidden" name="difficulty" value="{{ difficulty }}">
+    </form>
+    
+    
+
+    <div id="animation-parent">
+        <div id="animation-container">
+            <div id="checkmark">✔️</div>
+            <div id="cross">❌</div>
+        </div>
+    </div>
+    
+    
+
+    <script>
+        window.cities = {{ cities_json|safe}};
+    </script>
+
+    <script src="{% static 'showdown/index.js' %}"></script>
+
+
+{% endblock %}
